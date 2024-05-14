@@ -1,8 +1,11 @@
-import express from "express"
+import express, { urlencoded } from "express"
 import connectiondb from "./database/connection.js"
 let app = express ()
 import { PORT } from "./config.js"
 import routerClientes from "./routes/clientes.routes.js"
+
+app.use (express.json ())
+app.use(express.urlencoded({ extended: false }));
 
 app.use (routerClientes)
 

@@ -12,7 +12,9 @@ export let getClientes = (req, res)=> {
     })
 }
 
-let postCliente = () => {
+
+
+export let postCliente = (req, res) => {
     console.log ("Accediendo a la ruta de agregar cliente")
     let {nombreCli, telefonoCli, emailCli} = req.body
     connectiondb.query ("INSERT INTO clientes (Nombre_completo_Cliente, Telefono_Cliente, Email_Cliente) VALUES (?, ?, ?)", [nombreCli, telefonoCli, emailCli])
