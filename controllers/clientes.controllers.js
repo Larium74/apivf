@@ -58,3 +58,10 @@ export let deleteClientes = (reeq, res) => {
             })
         })
 }
+
+
+
+export let mainGet = (req, res) => {
+    console.log ("Ingresnado a la ruta principal")
+    res.send ("Bienvenidos a la ruta principal")
+}
