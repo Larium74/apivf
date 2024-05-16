@@ -65,3 +65,26 @@ export let mainGet = (req, res) => {
     console.log ("Ingresnado a la ruta principal")
     res.send ("Bienvenidos a la ruta principal")
 }
+
+
+export let putUsuarios = (req, res) => {
+    console.log ("Accediendo a la ruta /putUsuari")
+    const {id, nombreCli, fecha_nacimientoCli} = req.body
+    connectiondb.query ("INSERT INTO Clientes WHERE ID = ? VALUES (?, ?)", [id, nombreCli, fecha_nacimientoCli])
+    .then ((data)=> {
+        console.log ("Usuario insertado exitosamente")
+        res.status (200).json ({
+            message: "Cliente agregado exitosamente",
+            state: "successly",
+            result: data[0]
+        })
+        .catch ((error)=> {
+            console.log ("Error al agregar a la base de datos")
+            res.status (400).json ({
+                messae: "Hubo un error al realizar la solicitud a la base de datos",
+                state: "Error",
+                Error: error
+            })
+        })
+    })
+}
