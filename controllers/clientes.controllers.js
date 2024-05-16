@@ -28,3 +28,33 @@ export let postCliente = (req, res) => {
     })
 
 }
+
+
+
+export let putClientes = (req, res) => {
+    console.log ("Accediendo a /putClientes")
+    connectiondb.query ("")
+
+}
+
+export let deleteClientes = (reeq, res) => {
+    console.log ("Accediendo a /deleteClientes")
+
+    
+    const {idCli} = req.body.params
+    connectiondb.query ("DELETE FROM clientes WHERE ID_Cliente = ?", [idCli])
+        .then ((result)=> {
+            console.log ("El cliente ha sido eliminado exitosamente")
+            res.status (200).json ({
+                message: "El cliente ha sido eliminado exitosamente",
+                status: "correct"
+            })
+            .catch ((error)=> {
+                console.log ("Hubo un error al eliminar el cliente "+error)
+                res.status (400).json ({
+                    message: "error",
+                    error: error
+                })
+            })
+        })
+}
