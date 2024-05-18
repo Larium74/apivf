@@ -1,90 +1,40 @@
-import connectiondb from "../database/connection.js"
+import connectiondb from "../database/connection.js";
 
-export let getClientes = (req, res)=> {
-    console.log ("Accediendo a la ruta /clientes")
-    connectiondb.query ("SELECT Nombre_completo_Cliente, Telefono_Cliente, Email_Cliente FROM clientes")
-    .then ((data)=> {
-        console.log ("Han sido obtenidos los clientes: "+data[0])
-        res.send ("Aquí tienes a los Clientes: "+data[0])
+export let getClientes = (req, res) => {
+    console.log("Accediendo a la ruta get /clientes");
+    connectiondb.query("SELECT ID_Cliente, Nombres_Clientes, Apellidos_Clientes, Fecha_nacimiento_Cliente, Email_Cliente, Telefono_Cliente, Sexo_Cliente FROM Clientes")
+    .then((data) => {
+        console.log("Los clientes se obtuvieron exitosamente: ", data[0]);
+        res.status(200).json({
+            Mensaje: "Aquí se muestran los Clientes",
+            Clientes: data[0]
+        });
     })
-    .catch ((error)=> {
-        console.log ("Se ha producido un error al obtener a los Clientes "+error)
-    })
-}
-
-
+    .catch((error) => {
+        console.log("Se ha producido un error al obtener a los Clientes: " + error);
+        res.status(400).json({
+            Mensaje: "Ha ocurrido un error al obtener a los Clientes"
+        });
+    });
+};
 
 export let postCliente = (req, res) => {
-    console.log ("Accediendo a la ruta de agregar cliente")
-    let {nombreCli, telefonoCli, emailCli} = req.body
-    connectiondb.query ("INSERT INTO clientes (Nombre_completo_Cliente, Telefono_Cliente, Email_Cliente) VALUES (?, ?, ?)", [nombreCli, telefonoCli, emailCli])
-    .then ((result)=> {
-        console.log ("El cliente ha sido agregado")
-        res.status (200)
+    console.log("Accediendo a la ruta post /clientes");
+
+    const { nombresCli, apellidosCli, fecha_nacimientoCli, emailCli, telefonoCli, sexoCli } = req.body;
+
+    connectiondb.query("INSERT INTO `Clientes` (`Nombres_Clientes`, `Apellidos_Clientes`, `Fecha_nacimiento_Cliente`, `Email_Cliente`, `Telefono_Cliente`, `Sexo_Cliente`) VALUES (?, ?, ?, ?, ?, ?)", [nombresCli, apellidosCli, fecha_nacimientoCli, emailCli, telefonoCli, sexoCli])
+    .then((result) => {
+        console.log("El Cliente se ha agregado exitosamente a la base de datos", result);
+        res.status(201).json({
+            Mensaje: "Cliente agregado exitosamente",
+            Result: result
+        });
     })
-    .catch ((error)=> {
-        console.log ("Hubo un error al agregar al cliente "+error)
-        res.status (400)
-    })
-
-}
-
-
-
-export let putClientes = (req, res) => {
-    console.log ("Accediendo a /putClientes")
-    connectiondb.query ("")
-
-}
-
-export let deleteClientes = (reeq, res) => {
-    console.log ("Accediendo a /deleteClientes")
-
-    
-    const {idCli} = req.body.params
-    connectiondb.query ("DELETE FROM clientes WHERE ID_Cliente = ?", [idCli])
-        .then ((result)=> {
-            console.log ("El cliente ha sido eliminado exitosamente")
-            res.status (200).json ({
-                message: "El cliente ha sido eliminado exitosamente",
-                status: "correct"
-            })
-            .catch ((error)=> {
-                console.log ("Hubo un error al eliminar el cliente "+error)
-                res.status (400).json ({
-                    message: "error",
-                    error: error
-                })
-            })
-        })
-}
-
-
-
-export let mainGet = (req, res) => {
-    console.log ("Ingresnado a la ruta principal")
-    res.send ("Bienvenidos a la ruta principal")
-}
-
-
-export let putUsuarios = (req, res) => {
-    console.log ("Accediendo a la ruta /putUsuari")
-    const {id, nombreCli, fecha_nacimientoCli} = req.body
-    connectiondb.query ("INSERT INTO Clientes WHERE ID = ? VALUES (?, ?)", [id, nombreCli, fecha_nacimientoCli])
-    .then ((data)=> {
-        console.log ("Usuario insertado exitosamente")
-        res.status (200).json ({
-            message: "Cliente agregado exitosamente",
-            state: "successly",
-            result: data[0]
-        })
-        .catch ((error)=> {
-            console.log ("Error al agregar a la base de datos")
-            res.status (400).json ({
-                messae: "Hubo un error al realizar la solicitud a la base de datos",
-                state: "Error",
-                Error: error
-            })
-        })
-    })
-}
+    .catch((error) => {
+        console.log("No se pudo agregar el Cliente a la base de datos: " + error);
+        res.status(400).json({
+            Mensaje: "No se pudo agregar el Cliente a la base de datos"
+        });
+    });
+};
