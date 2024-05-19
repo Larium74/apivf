@@ -23,7 +23,7 @@ export let postCliente = (req, res) => {
 
     const { nombresCli, apellidosCli, fecha_nacimientoCli, emailCli, telefonoCli, sexoCli } = req.body;
 
-    connectiondb.query("INSERT INTO `Clientes` (`Nombres_Clientes`, `Apellidos_Clientes`, `Fecha_nacimiento_Cliente`, `Email_Cliente`, `Telefono_Cliente`, `Sexo_Cliente`) VALUES (?, ?, ?, ?, ?, ?)", [nombresCli, apellidosCli, fecha_nacimientoCli, emailCli, telefonoCli, sexoCli])
+    connectiondb.query("INSERT INTO `clientes` (`Nombres_Clientes`, `Apellidos_Clientes`, `Fecha_nacimiento_Cliente`, `Email_Cliente`, `Telefono_Cliente`, `Sexo_Cliente`) VALUES (?, ?, ?, ?, ?, ?)", [nombresCli, apellidosCli, fecha_nacimientoCli, emailCli, telefonoCli, sexoCli])
     .then((result) => {
         console.log("El Cliente se ha agregado exitosamente a la base de datos", result);
         res.status(201).json({
