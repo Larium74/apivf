@@ -35,6 +35,7 @@ export let postCliente = (req, res) => {
     })
     .catch((error) => {
         console.log("No se pudo agregar el Cliente a la base de datos: " + error.message);
+        console.log ("Este es el nombre "+Nombres_Cliente, " Esta es la fecha de nacimiento "+Fecha_nacimiento_Cliente+" y este el email "+Email_Cliente)
         res.status(400).json({
             Mensaje: "No se pudo agregar el Cliente a la base de datos",
             Error: error.message
