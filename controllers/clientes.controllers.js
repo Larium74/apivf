@@ -2,7 +2,7 @@ import connectiondb from "../database/connection.js";
 
 export let getClientes = (req, res) => {
     console.log("Accediendo a la ruta get /clientes");
-    connectiondb.query("SELECT ID_Cliente, Nombres_Clientes, Apellidos_Clientes, Fecha_nacimiento_Cliente, Email_Cliente, Telefono_Cliente, Sexo_Cliente FROM Clientes")
+    connectiondb.query("SELECT ID_Cliente, Nombres_Cliente, Apellidos_Cliente, Fecha_nacimiento_Cliente, Email_Cliente, Telefono_Cliente, Sexo_Cliente FROM clientes")
     .then((data) => {
         console.log("Los clientes se obtuvieron exitosamente: ", data[0]);
         res.status(200).json({
