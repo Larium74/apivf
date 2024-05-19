@@ -18,12 +18,14 @@ export let getClientes = (req, res) => {
     });
 };
 
+
+
 export let postCliente = (req, res) => {
     console.log("Accediendo a la ruta post /clientes");
 
-    const { nombresCli, apellidosCli, fecha_nacimientoCli, emailCli, telefonoCli, sexoCli } = req.body;
+    const { Nombres_Cliente, Apellidos_Cliente, Fecha_nacimiento_Cliente, Email_Cliente, Telefono_Cliente, Sexo_Cliente } = req.body;
 
-    connectiondb.query("INSERT INTO `clientes` (`Nombres_Cliente`, `Apellidos_Cliente`, `Fecha_nacimiento_Cliente`, `Email_Cliente`, `Telefono_Cliente`, `Sexo_Cliente`) VALUES (?, ?, ?, ?, ?, ?)", [nombresCli, apellidosCli, fecha_nacimientoCli, emailCli, telefonoCli, sexoCli])
+    connectiondb.query("INSERT INTO `clientes` (`Nombres_Cliente`, `Apellidos_Cliente`, `Fecha_nacimiento_Cliente`, `Email_Cliente`, `Telefono_Cliente`, `Sexo_Cliente`) VALUES (?, ?, ?, ?, ?, ?)", [Nombres_Cliente, Apellidos_Cliente, Fecha_nacimiento_Cliente, Email_Cliente, Telefono_Cliente, Sexo_Cliente])
     .then((result) => {
         console.log("El Cliente se ha agregado exitosamente a la base de datos", result);
         res.status(201).json({
@@ -32,9 +34,10 @@ export let postCliente = (req, res) => {
         });
     })
     .catch((error) => {
-        console.log("No se pudo agregar el Cliente a la base de datos: " + error);
+        console.log("No se pudo agregar el Cliente a la base de datos: " + error.message);
         res.status(400).json({
-            Mensaje: "No se pudo agregar el Cliente a la base de datos"
+            Mensaje: "No se pudo agregar el Cliente a la base de datos",
+            Error: error.message
         });
     });
 };
