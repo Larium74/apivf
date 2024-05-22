@@ -42,3 +42,11 @@ export let postCliente = (req, res) => {
         });
     });
 };
+
+export let mainRuta = (req, res) => {
+    console.log ("Accediendo a la ruta principal /")
+    res.status (200).json ({
+        Mensaje: "Bienvenidos a la ruta principal",
+        Estado: "successly"
+    })
+}
